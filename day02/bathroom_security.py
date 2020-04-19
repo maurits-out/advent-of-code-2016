@@ -23,11 +23,13 @@ def is_valid(keypad, location):
 
 def part1(instructions):
     keypad = ["123", "456", "789"]
-    return bathroom_code(keypad, instructions, (1, 1))
+    initial_location = (1, 1)
+    return bathroom_code(keypad, instructions, initial_location)
 
 def part2(instructions):
     keypad = ["  1  ", " 234 ", "56789", " ABC ", "  D  "]
-    return bathroom_code(keypad, instructions, (2, 0))
+    initial_location = (2, 0)
+    return bathroom_code(keypad, instructions, initial_location)
 
 instructions = []
 with open("day02/input.txt", "r") as file:
