@@ -1,3 +1,7 @@
+NUM_SIDES_IN_TRIANGLE = 3
+NUM_COLUMNS_IN_FILE = 3
+
+
 def read_lines():
     with open("input.txt", "r") as file:
         return file.readlines()
@@ -5,7 +9,7 @@ def read_lines():
 
 def count_valid_triangles(lines):
     count = 0
-    for column_number in range(3):
+    for column_number in range(NUM_COLUMNS_IN_FILE):
         column = extract_column(lines, column_number)
         count += count_valid_triangles_in_column(column)
     return count
@@ -21,8 +25,8 @@ def extract_column(lines, column_number):
 
 def count_valid_triangles_in_column(column):
     count = 0
-    for row in range(0, len(column) - 2, 3):
-        if is_valid_triangle(column[row], column[row + 1], column[row + 2]):
+    for row in range(0, len(column) - NUM_SIDES_IN_TRIANGLE + 1, NUM_SIDES_IN_TRIANGLE):
+        if is_valid_triangle(*column[row: row + NUM_SIDES_IN_TRIANGLE]):
             count += 1
     return count
 
