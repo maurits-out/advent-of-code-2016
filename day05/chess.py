@@ -35,23 +35,23 @@ def join_password_chars(password_chars):
     return "".join(password_chars)
 
 
-def find_password_part1(puzzle_input):
+def find_password_part1():
     index = -1
     password_chars = []
     while len(password_chars) < PASSWORD_LENGTH:
         index += 1
-        md5_hash = apply_md5_hash(puzzle_input, index)
+        md5_hash = apply_md5_hash(PUZZLE_INPUT, index)
         if is_valid_hash(md5_hash):
             password_chars.append(md5_hash[5])
     return join_password_chars(password_chars)
 
 
-def find_password_part2(puzzle_input):
+def find_password_part2():
     index = -1
     password_chars = list(PLACEHOLDER * 8)
     while is_password_incomplete(password_chars):
         index += 1
-        md5_hash = apply_md5_hash(puzzle_input, index)
+        md5_hash = apply_md5_hash(PUZZLE_INPUT, index)
         if is_valid_hash(md5_hash):
             if is_invalid_position_char(md5_hash[5]):
                 continue
@@ -63,8 +63,8 @@ def find_password_part2(puzzle_input):
 
 
 def main():
-    print("The password for part 1 is {}".format(find_password_part1(PUZZLE_INPUT)))
-    print("The password for part 2 is {}".format(find_password_part2(PUZZLE_INPUT)))
+    print("The password for part 1 is {}".format(find_password_part1()))
+    print("The password for part 2 is {}".format(find_password_part2()))
 
 
 if __name__ == '__main__':
