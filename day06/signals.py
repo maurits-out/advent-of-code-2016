@@ -1,3 +1,5 @@
+LEAST_FREQUENT_FACTOR = 1
+MOST_FREQUENT_FACTOR = -1
 MESSAGE_LENGTH = 8
 
 
@@ -25,8 +27,8 @@ def read_input():
 
 def main():
     messages = read_input()
-    print("The message for part 1: {}".format(reconstruct_correct_message(messages, -1)))
-    print("The message for part 2: {}".format(reconstruct_correct_message(messages, 1)))
+    print("The message for part 1: {}".format(reconstruct_correct_message(messages, MOST_FREQUENT_FACTOR)))
+    print("The message for part 2: {}".format(reconstruct_correct_message(messages, LEAST_FREQUENT_FACTOR)))
 
 
 if __name__ == '__main__':
