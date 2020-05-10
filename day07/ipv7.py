@@ -24,21 +24,18 @@ def end_hypernet_sequence(ip, index):
 
 
 def supports_tls(ip):
-    index = 0
     abba_found = False
     in_hypernet_sequence = False
-    while index < len(ip) - ABBA_LENGTH:
+    for index in range(len(ip) - ABBA_LENGTH):
         if start_hypernet_sequence(ip, index):
             in_hypernet_sequence = True
         elif end_hypernet_sequence(ip, index):
             in_hypernet_sequence = False
         elif has_abba(ip, index):
             if in_hypernet_sequence:
-                break
-            else:
-                abba_found = True
-        index += 1
-    return abba_found and index == len(ip) - ABBA_LENGTH
+                return False
+            abba_found = True
+    return abba_found
 
 
 def count_tls(ips):
