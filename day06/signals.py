@@ -1,16 +1,20 @@
+MESSAGE_LENGTH = 8
+
+
 def find_character(messages, position, factor):
     char_count = {}
     for message in messages:
         current_char = message[position]
         char_count[current_char] = char_count.get(current_char, 0) + 1
-    sorted_chars = sorted(char_count, key=lambda ch: factor * char_count[ch])
+    sorted_chars = sorted(char_count, key=lambda char: factor * char_count[char])
     return sorted_chars[0]
 
 
 def reconstruct_correct_message(messages, factor):
     result = []
-    for pos in range(0, 8):
-        result.append(find_character(messages, pos, factor))
+    for pos in range(MESSAGE_LENGTH):
+        char = find_character(messages, pos, factor)
+        result.append(char)
     return "".join(result)
 
 
