@@ -5,33 +5,33 @@ def is_letter(char):
     return "a" <= char <= "z"
 
 
-def has_abba(ip, index):
-    if ip[index] != ip[index + 3]:
+def has_abba(ip, pos):
+    if ip[pos] != ip[pos + 3]:
         return False
-    if ip[index + 1] != ip[index + 2]:
+    if ip[pos + 1] != ip[pos + 2]:
         return False
-    if ip[index] == ip[index + 1]:
+    if ip[pos] == ip[pos + 1]:
         return False
-    return is_letter(ip[index]) and is_letter(ip[index + 1])
+    return is_letter(ip[pos]) and is_letter(ip[pos + 1])
 
 
-def start_hypernet_sequence(ip, index):
-    return ip[index] == "["
+def start_hypernet_sequence(ip, pos):
+    return ip[pos] == "["
 
 
-def end_hypernet_sequence(ip, index):
-    return ip[index] == "]"
+def end_hypernet_sequence(ip, pos):
+    return ip[pos] == "]"
 
 
 def supports_tls(ip):
     abba_found = False
     in_hypernet_sequence = False
-    for index in range(len(ip) - ABBA_LENGTH):
-        if start_hypernet_sequence(ip, index):
+    for pos in range(len(ip) - ABBA_LENGTH):
+        if start_hypernet_sequence(ip, pos):
             in_hypernet_sequence = True
-        elif end_hypernet_sequence(ip, index):
+        elif end_hypernet_sequence(ip, pos):
             in_hypernet_sequence = False
-        elif has_abba(ip, index):
+        elif has_abba(ip, pos):
             if in_hypernet_sequence:
                 return False
             abba_found = True
