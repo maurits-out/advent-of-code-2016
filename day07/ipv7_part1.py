@@ -39,11 +39,8 @@ def supports_tls(ip):
 
 
 def count_tls(ips):
-    count = 0
-    for ip in ips:
-        if supports_tls(ip):
-            count += 1
-    return count
+    tls_ips = filter(lambda ip: supports_tls(ip), ips)
+    return len(list(tls_ips))
 
 
 def read_input():

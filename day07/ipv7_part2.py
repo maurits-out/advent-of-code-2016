@@ -42,18 +42,13 @@ def convert_aba_to_bab(aba):
 
 def supports_ssl(ip):
     abas, babs = find_abas_and_babs(ip)
-    for aba in abas:
-        if convert_aba_to_bab(aba) in babs:
-            return True
-    return False
+    matching = filter(lambda aba: convert_aba_to_bab(aba) in babs, abas)
+    return len(list(matching)) > 0
 
 
 def count_ssl(ips):
-    count = 0
-    for ip in ips:
-        if supports_ssl(ip):
-            count += 1
-    return count
+    ssl_ips = filter(lambda ip: supports_ssl(ip), ips)
+    return len(list(ssl_ips))
 
 
 def read_input():

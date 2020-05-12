@@ -13,10 +13,7 @@ def find_character(messages, position, factor):
 
 
 def reconstruct_correct_message(messages, factor):
-    result = []
-    for pos in range(MESSAGE_LENGTH):
-        char = find_character(messages, pos, factor)
-        result.append(char)
+    result = map(lambda pos: find_character(messages, pos, factor), range(MESSAGE_LENGTH))
     return "".join(result)
 
 

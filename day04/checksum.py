@@ -17,46 +17,42 @@ def extract_supplied_checksum(last_segment):
     return last_segment[opening + 1:closing]
 
 
-def is_real_room(segments):
+def is_real_room(line):
+    segments = line.split("-")
     reconstructed_checksum = reconstruct_checksum("".join(segments[:-1]))
     supplied_checksum = extract_supplied_checksum(segments[-1])
     return supplied_checksum == reconstructed_checksum
 
 
-def extract_sector_id(last_segment):
+def extract_sector_id(line):
+    segments = line.split("-")
+    last_segment = segments[-1]
     opening = last_segment.find("[")
     return int(last_segment[:opening])
 
 
 def find_real_rooms(lines):
-    real_rooms = []
-    for line in lines:
-        segments = line.split("-")
-        if is_real_room(segments):
-            real_rooms.append(line)
-    return real_rooms
+    real_rooms = filter(lambda line: is_real_room(line), lines)
+    return list(real_rooms)
 
 
 def sum_of_sector_ids(lines_of_real_rooms):
-    sum_of_ids = 0
-    for line in lines_of_real_rooms:
-        segments = line.split("-")
-        sum_of_ids += extract_sector_id(segments[-1])
-    return sum_of_ids
+    sector_ids = map(lambda line: extract_sector_id(line), lines_of_real_rooms)
+    return sum(sector_ids)
+
+
+def decrypt_char(char, sector_id):
+    n = (ord(char) - CODE_POINT_A + sector_id) % NUM_LETTERS
+    return chr(CODE_POINT_A + n)
 
 
 def decrypt_segment(segment, sector_id):
-    result = ""
-    for char in segment:
-        n = (ord(char) - CODE_POINT_A + sector_id) % NUM_LETTERS
-        result += chr(CODE_POINT_A + n)
-    return result
+    result = map(lambda char: decrypt_char(char, sector_id), segment)
+    return "".join(result)
 
 
 def decrypt(segments, sector_id):
-    result = []
-    for segment in segments:
-        result.append(decrypt_segment(segment, sector_id))
+    result = map(lambda s: decrypt_segment(s, sector_id), segments)
     return " ".join(result)
 
 
