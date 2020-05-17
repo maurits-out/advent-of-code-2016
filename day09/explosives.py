@@ -1,22 +1,22 @@
-def decompressed_length_part1(contents):
-    idx, length, value, subsequence_length = 0, 0, 0, 0
-    parsing_marker = False
-    while idx < len(contents):
-        if parsing_marker and "0" <= contents[idx] <= "9":
-            value = value * 10 + int(contents[idx])
-        elif parsing_marker and contents[idx] == "x":
-            subsequence_length = value
-            value = 0
-        elif parsing_marker and contents[idx] == ")":
-            length += subsequence_length * value
-            idx += subsequence_length
-            parsing_marker = False
-        elif contents[idx] == "(":
-            value = 0
-            parsing_marker = True
+def parse_marker(marker):
+    separator = marker.find("x")
+    return int(marker[0:separator]), int(marker[separator + 1:])
+
+
+def decompressed_length(contents, start, end, recurse):
+    idx, length = start, 0
+    while idx < end:
+        if contents[idx] == "(":
+            idx_closing = contents.find(")", idx)
+            subsequence_length, repeat = parse_marker(contents[idx + 1:idx_closing])
+            idx = idx_closing + subsequence_length + 1
+            if recurse:
+                length += repeat * decompressed_length(contents, idx_closing + 1, idx, recurse)
+            else:
+                length += repeat * subsequence_length
         else:
             length += 1
-        idx += 1
+            idx += 1
     return length
 
 
@@ -27,7 +27,10 @@ def read_input():
 
 def main():
     contents = read_input()
-    print("Decompressed length of the file: {}".format(decompressed_length_part1(contents)))
+    length_part1 = decompressed_length(contents, 0, len(contents), False)
+    print("Decompressed length of the file (part 1): {}".format(length_part1))
+    length_part2 = decompressed_length(contents, 0, len(contents), True)
+    print("Decompressed length of the file (part 2): {}".format(length_part2))
 
 
 if __name__ == '__main__':
