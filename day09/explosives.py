@@ -1,6 +1,6 @@
 def parse_marker(marker):
     separator = marker.find("x")
-    return int(marker[0:separator]), int(marker[separator + 1:])
+    return int(marker[:separator]), int(marker[separator + 1:])
 
 
 def decompressed_length(contents, start, end, recurse):
