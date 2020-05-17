@@ -1,7 +1,3 @@
-def marker_start(char):
-    return char == "("
-
-
 def decompressed_length_part1(contents):
     idx, length, value, subsequence_length = 0, 0, 0, 0
     parsing_marker = False
