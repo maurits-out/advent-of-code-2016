@@ -57,21 +57,29 @@ def assign_chip_to_bot(state, bot, chip):
 
 def apply_instruction(state, bot, instruction, output):
     low, high = extract_low_and_high(state[bot])
-    match = re.match(r'low to bot (\d+)', instruction)
-    if match:
-        assign_chip_to_bot(state, int(match.group(1)), low)
+    assign_low(instruction, low, output, state)
+    assign_high(high, instruction, output, state)
+    del state[bot]
+
+
+def assign_high(high, instruction, output, state):
     match = re.match(r'.+high to bot (\d+)', instruction)
     if match:
         assign_chip_to_bot(state, int(match.group(1)), high)
-    match = re.match(r'low to output (\d+)', instruction)
-    if match:
-        output_bin = int(match.group(1))
-        output[output_bin] = low
+        return
     match = re.match(r'.+high to output (\d+)', instruction)
+    output_bin = int(match.group(1))
+    output[output_bin] = high
+
+
+def assign_low(instruction, low, output, state):
+    match = re.match(r'low to bot (\d+)', instruction)
     if match:
-        output_bin = int(match.group(1))
-        output[output_bin] = high
-    del state[bot]
+        assign_chip_to_bot(state, int(match.group(1)), low)
+        return
+    match = re.match(r'low to output (\d+)', instruction)
+    output_bin = int(match.group(1))
+    output[output_bin] = low
 
 
 def part1(state, instructions):
