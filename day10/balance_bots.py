@@ -58,11 +58,11 @@ def assign_chip_to_bot(state, bot, chip):
 def apply_instruction(state, bot, instruction, output):
     low, high = extract_low_and_high(state[bot])
     assign_low(instruction, low, output, state)
-    assign_high(high, instruction, output, state)
+    assign_high(instruction, high, output, state)
     del state[bot]
 
 
-def assign_high(high, instruction, output, state):
+def assign_high(instruction, high, output, state):
     match = re.match(r'.+high to bot (\d+)', instruction)
     if match:
         assign_chip_to_bot(state, int(match.group(1)), high)
