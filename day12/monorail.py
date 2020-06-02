@@ -59,8 +59,8 @@ def read_instructions():
 
 def main():
     instructions = read_instructions()
-    print("Value of registers a (part 1): {}".format(part1(instructions)))
-    print("Value of registers a (part 2): {}".format(part2(instructions)))
+    print("Value of register 'a' (part 1): {}".format(part1(instructions)))
+    print("Value of register 'a' (part 2): {}".format(part2(instructions)))
 
 
 if __name__ == '__main__':
