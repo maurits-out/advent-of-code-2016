@@ -6,8 +6,8 @@ def evaluate(expression, registers):
 
 def copy(registers, arguments):
     value = evaluate(arguments[0], registers)
-    target_register = arguments[1]
-    registers[target_register] = value
+    register = arguments[1]
+    registers[register] = value
 
 
 def update(registers, arguments, delta):
