@@ -6,8 +6,8 @@ HASH_PREFIX = "00000"
 PLACEHOLDER = "_"
 
 
-def apply_md5_hash(puzzle_input, index):
-    value_to_hash = puzzle_input + str(index)
+def apply_md5_hash(index):
+    value_to_hash = PUZZLE_INPUT + str(index)
     md5 = hashlib.md5(value_to_hash.encode())
     return md5.digest().hex()
 
@@ -40,7 +40,7 @@ def find_password_part1():
     password_chars = []
     while len(password_chars) < PASSWORD_LENGTH:
         index += 1
-        md5_hash = apply_md5_hash(PUZZLE_INPUT, index)
+        md5_hash = apply_md5_hash(index)
         if is_valid_hash(md5_hash):
             password_chars.append(md5_hash[5])
     return join_password_chars(password_chars)
@@ -51,7 +51,7 @@ def find_password_part2():
     password_chars = list(PLACEHOLDER * 8)
     while is_password_incomplete(password_chars):
         index += 1
-        md5_hash = apply_md5_hash(PUZZLE_INPUT, index)
+        md5_hash = apply_md5_hash(index)
         if is_valid_hash(md5_hash):
             if is_invalid_position_char(md5_hash[5]):
                 continue
