@@ -17,12 +17,12 @@ class State:
         self.path = path
 
     def next_states(self):
-        result = []
-        md5_hash = self.__generate_hash()
-        for index, direction in enumerate([UP, DOWN, LEFT, RIGHT]):
-            if self.__can_move(direction) and State.__is_door_open(md5_hash, index):
-                result.append(self.__move(direction))
-        return result
+        md5_hash = self.generate_hash()
+        return [self.move(direction) for index, direction in enumerate([UP, DOWN, LEFT, RIGHT]) if
+                self.is_valid_move(direction, index, md5_hash)]
+
+    def is_valid_move(self, direction, index, md5_hash):
+        return self.can_move(direction) and State.is_door_open(md5_hash, index)
 
     def is_destination(self):
         return self.row == GRID_SIZE and self.column == GRID_SIZE
@@ -33,7 +33,7 @@ class State:
     def get_path_length(self):
         return len(self.path)
 
-    def __move(self, direction):
+    def move(self, direction):
         if direction == UP:
             return State(self.row - 1, self.column, self.path + [UP])
         elif direction == DOWN:
@@ -42,18 +42,18 @@ class State:
             return State(self.row, self.column - 1, self.path + [LEFT])
         return State(self.row, self.column + 1, self.path + [RIGHT])
 
-    def __can_move(self, direction):
+    def can_move(self, direction):
         return (direction == UP and self.row > 1) or \
                (direction == DOWN and self.row < GRID_SIZE) or \
                (direction == LEFT and self.column > 1) or \
                (direction == RIGHT and self.column < GRID_SIZE)
 
-    def __generate_hash(self):
+    def generate_hash(self):
         value_to_hash = PUZZLE_INPUT + "".join(self.path)
         return md5(value_to_hash.encode()).digest().hex()
 
     @staticmethod
-    def __is_door_open(md5_hash, index):
+    def is_door_open(md5_hash, index):
         return md5_hash[index] in OPEN_CHARACTERS
 
     @staticmethod
