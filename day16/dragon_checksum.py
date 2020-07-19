@@ -28,5 +28,8 @@ def generate_checksum_of_even_length(disk_length):
     return convert_to_string(checksum)
 
 
-print("Checksum of part 1: {}".format(generate_checksum_of_even_length(272)))
-print("Checksum of part 2: {}".format(generate_checksum_of_even_length(35651584)))
+part1 = generate_checksum_of_even_length(272)
+print(f"Checksum of part 1: {part1}")
+
+part2 = generate_checksum_of_even_length(35651584)
+print(f"Checksum of part 2: {part2}")
