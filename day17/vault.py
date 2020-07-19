@@ -8,7 +8,6 @@ RIGHT = "R"
 LEFT = "L"
 DOWN = "D"
 UP = "U"
-DIRECTIONS = [UP, DOWN, LEFT, RIGHT]
 
 
 class State:
@@ -20,7 +19,7 @@ class State:
     def next_states(self):
         result = []
         md5_hash = self.__generate_hash()
-        for index, direction in enumerate(DIRECTIONS):
+        for index, direction in enumerate([UP, DOWN, LEFT, RIGHT]):
             if self.__can_move(direction) and State.__is_door_open(md5_hash, index):
                 result.append(self.__move(direction))
         return result
