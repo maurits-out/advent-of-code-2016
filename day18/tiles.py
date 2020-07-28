@@ -19,22 +19,22 @@ def construct_next_row(row):
     return [get_tile_in_next_row(extended_row, tile_index) for tile_index in range(1, len(extended_row) - 1)]
 
 
-def count_safe_tiles(row):
+def count_safe_tiles_in_row(row):
     return len([ch for ch in row if ch == "."])
 
 
-def generate_rows(row_count):
+def count_safe_tiles(row_count):
     current = list(INPUT)
-    num_safe_tiles = count_safe_tiles(current)
+    num_safe_tiles = count_safe_tiles_in_row(current)
     for _ in range(row_count - 1):
         next_row = construct_next_row(current)
-        num_safe_tiles += count_safe_tiles(next_row)
+        num_safe_tiles += count_safe_tiles_in_row(next_row)
         current = next_row
     return num_safe_tiles
 
 
-part1 = generate_rows(40)
+part1 = count_safe_tiles(40)
 print(f"Number of safe tiles (part 1): {part1}")
 
-part2 = generate_rows(400000)
+part2 = count_safe_tiles(400000)
 print(f"Number of safe tiles (part 2): {part2}")
