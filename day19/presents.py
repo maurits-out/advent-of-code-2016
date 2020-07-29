@@ -4,7 +4,6 @@ INPUT = 3014603
 class Elf:
     def __init__(self, position):
         self.position = position
-        self.presents = 1
         self.next = None
 
 
@@ -21,7 +20,6 @@ def create_circle():
 def part1():
     current = create_circle()
     while current.next != current:
-        current.presents = current.presents + current.next.presents
         current.next = current.next.next
         current = current.next
     return current.position
