@@ -1,28 +1,18 @@
+from math import log2, pow
+
+"""
+This puzzle corresponds to the Josephus problem (https://en.wikipedia.org/wiki/Josephus_problem).
+Part 1 can be solved using k = 2. The elf receiving all the presents can be computed using 2 * i + 1 where
+INPUT = 2 ^ m + i  (0 <= i < 2^m).
+"""
+
 INPUT = 3014603
 
 
-class Elf:
-    def __init__(self, position):
-        self.position = position
-        self.next = None
-
-
-def create_circle():
-    first = Elf(1)
-    current = first
-    for position in range(2, INPUT + 1):
-        current.next = Elf(position)
-        current = current.next
-    current.next = first
-    return first
-
-
 def part1():
-    current = create_circle()
-    while current.next != current:
-        current.next = current.next.next
-        current = current.next
-    return current.position
+    m = int(log2(INPUT))
+    i = INPUT - int(pow(2, m))
+    return 2 * i + 1
 
 
 result = part1()
