@@ -1,4 +1,5 @@
 import re
+from itertools import permutations
 
 
 def swap_position(string, pos1, pos2):
@@ -88,10 +89,19 @@ def scramble(password, operations):
     return scrambled
 
 
+def unscramble(scrambled, operations):
+    candidates = ("".join(perm) for perm in permutations(scrambled))
+    return next(candidate for candidate in candidates if scramble(candidate, operations) == scrambled)
+
+
 def main():
     operations = read_operations_from_input()
+
     scrambled = scramble("abcdefgh", operations)
     print(f"Scrambled password (part 1): {scrambled}")
+
+    unscrambled = unscramble("fbgdceah", operations)
+    print(f"Unscrambled version (part 2): {unscrambled}")
 
 
 if __name__ == '__main__':
