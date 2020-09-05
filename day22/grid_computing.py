@@ -33,11 +33,26 @@ def count_viable_pairs(grid):
     return len(pairs)
 
 
+def print_grid(grid):
+    for y in range(GRID_HEIGHT):
+        s = []
+        for x in range(GRID_WIDTH):
+            node = grid[x][y]
+            if node.used > 100:
+                s.append('#')
+            elif node.used == 0:
+                s.append('_')
+            else:
+                s.append('.')
+        print("  ".join(s))
+
+
 def main():
     lines = read_input()
     grid = create_grid(lines)
-    viable_pairs_count = count_viable_pairs(grid)
-    print(f'The number of viable pairs is (part 1): {viable_pairs_count}')
+    print_grid(grid)
+    count = count_viable_pairs(grid)
+    print(f'The number of viable pairs is (part 1): {count}')
 
 
 if __name__ == '__main__':
