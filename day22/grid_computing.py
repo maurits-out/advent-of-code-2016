@@ -11,20 +11,20 @@ def read_input():
 
 
 def create_grid(lines):
-    grid = [[None] * GRID_HEIGHT for _ in range(GRID_WIDTH)]
+    grid = [[None] * GRID_WIDTH for _ in range(GRID_HEIGHT)]
     node_tuple = namedtuple('node_tuple', 'size used available')
     for line in lines:
         match = re.match(r'/dev/grid/node-x(\d+)-y(\d+) +(\d+)T +(\d+)T +(\d+)T +\d+%', line)
         if match:
-            x = int(match.group(1))
-            y = int(match.group(2))
+            column = int(match.group(1))
+            row = int(match.group(2))
             node = node_tuple(int(match.group(3)), int(match.group(4)), int(match.group(5)))
-            grid[x][y] = node
+            grid[row][column] = node
     return grid
 
 
 def extract_all_nodes(grid):
-    return [grid[x][y] for x in range(GRID_WIDTH) for y in range(GRID_HEIGHT)]
+    return [grid[row][column] for row in range(GRID_HEIGHT) for column in range(GRID_WIDTH)]
 
 
 def count_viable_pairs(grid):
@@ -33,18 +33,18 @@ def count_viable_pairs(grid):
     return len(pairs)
 
 
+def node_to_char(node):
+    if node.used > 100:
+        return '#'
+    elif node.used == 0:
+        return '_'
+    return '.'
+
+
 def print_grid(grid):
-    for y in range(GRID_HEIGHT):
-        s = []
-        for x in range(GRID_WIDTH):
-            node = grid[x][y]
-            if node.used > 100:
-                s.append('#')
-            elif node.used == 0:
-                s.append('_')
-            else:
-                s.append('.')
-        print("  ".join(s))
+    for row in range(GRID_HEIGHT):
+        s = [node_to_char(node) for node in grid[row]]
+        print(" ".join(s))
 
 
 def main():
