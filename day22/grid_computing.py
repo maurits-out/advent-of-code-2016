@@ -12,13 +12,13 @@ def read_input():
 
 def create_grid(lines):
     grid = [[None] * GRID_WIDTH for _ in range(GRID_HEIGHT)]
-    node_tuple = namedtuple('node_tuple', 'size used available')
+    node_tuple = namedtuple('node_tuple', 'used available')
     for line in lines:
-        match = re.match(r'/dev/grid/node-x(\d+)-y(\d+) +(\d+)T +(\d+)T +(\d+)T +\d+%', line)
+        match = re.match(r'/dev/grid/node-x(\d+)-y(\d+) +\d+T +(\d+)T +(\d+)T +\d+%', line)
         if match:
             column = int(match.group(1))
             row = int(match.group(2))
-            node = node_tuple(int(match.group(3)), int(match.group(4)), int(match.group(5)))
+            node = node_tuple(int(match.group(3)), int(match.group(4)))
             grid[row][column] = node
     return grid
 
