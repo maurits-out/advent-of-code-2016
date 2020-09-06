@@ -60,7 +60,7 @@ def toggle(registers, arguments, instructions, pc):
 def execute(instructions, registers):
     pc = 0
     while pc < len(instructions):
-        if pc == 5 or pc == 21:
+        if pc in [5, 21]:
             # to speed up for part 2
             registers['a'] += registers['c'] * registers['d']
             pc += 5
@@ -83,26 +83,21 @@ def execute(instructions, registers):
             pc += jump(registers, arguments)
 
 
-def part1(instructions):
-    registers = {'a': 7, 'b': 0, 'c': 0, 'd': 0}
-    execute(instructions, registers)
-    return registers['a']
-
-
-def part2(instructions):
-    registers = {'a': 12, 'b': 0, 'c': 0, 'd': 0}
-    execute(instructions, registers)
-    return registers['a']
-
-
 def read_instructions():
     with open("input.txt", "r") as file:
         return file.read().splitlines()
 
 
+def run(a):
+    instructions = read_instructions()
+    registers = {'a': a, 'b': 0, 'c': 0, 'd': 0}
+    execute(instructions, registers)
+    return registers['a']
+
+
 def main():
-    print(f"Value of register 'a' (part 1): {part1(read_instructions())}")
-    print(f"Value of register 'a' (part 2): {part2(read_instructions())}")
+    print(f"Value of register 'a' (part 1): {run(7)}")
+    print(f"Value of register 'a' (part 2): {run(12)}")
 
 
 if __name__ == '__main__':
