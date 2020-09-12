@@ -47,11 +47,6 @@ def execute(instructions, registers):
             pc += jump(registers, arguments)
 
 
-def part1(instructions):
-    registers = {"a": 192, "b": 0, "c": 0, "d": 0}
-    execute(instructions, registers)
-
-
 def read_instructions():
     with open("input.txt", "r") as file:
         return file.read().splitlines()
